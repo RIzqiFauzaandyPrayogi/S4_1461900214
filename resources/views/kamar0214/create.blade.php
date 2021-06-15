@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Import Kamar')
+
 @section('content')
 
 <div>

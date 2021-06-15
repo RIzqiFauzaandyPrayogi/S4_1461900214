@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Import Dokter')
+
 @section('content')
 
 <a href="{{ route('dokter0214.create') }}">Tambahkan File Excel</a>

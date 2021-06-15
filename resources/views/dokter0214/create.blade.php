@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Import Dokter')
+
 @section('content')
 
 <div>
