@@ -13,5 +13,5 @@ class Kamar extends Model
 
     public $timestamps = false;
 
-    protected $guarded = ['id_pasien', 'id_dokter'];
+    protected $fillabel = ['id_pasien', 'id_dokter'];
 }

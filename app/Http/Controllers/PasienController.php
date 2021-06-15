@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PasienImport;
 use App\Models\Pasien;
 
-class PasienController extends Controller
+class pasienController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class PasienController extends Controller
 
         $pasien->appends($request->only('cari'));
 
-        return view('pasien.index0214', [
+        return view('pasien0214.index', [
             'pasien' => $pasien,
         ])
         ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -37,21 +37,32 @@ class PasienController extends Controller
      */
     public function destroy(Pasien $pasien)
     {
-        Excel::import(new PasienImport, request()->file('file_excel'));
         $pasien->delete();
 
-        return redirect()->route('pasien.index0214')
+        return redirect()->route('pasien0214.index')
                 ->with('success','Pasien berhasil dihapus');
+    }
+
+    /**
+    * Import file excel to database
+    */
+    public function create()
+    {
+        return view('pasien0214.create');
     }
 
     /**
      * Import file excel to database
      */
-    public function import()
+    public function store(Request $request)
     {
-        Excel::import(new PasienImport, request()->file('file_excel'));
+        $request->validate([
+            'file_excel' => 'required',
+        ]);
+
+        Excel::import(new PasienImport, $request->file('file_excel'));
 
         return redirect()->route('pasien.index0214')
-                ->with('success','Berhasil mengimport ke Pasien');
+        ->with('success','Berhasil mengimport ke Pasien');
     }
 }

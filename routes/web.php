@@ -17,7 +17,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::resource('pasien', PasienController::class);
-Route::resource('dokter', DokterController::class);
-Route::resource('kamar', KamarController::class);
-Route::resource('user', UserController::class);
+Route::resource('pasien0214', PasienController::class);
+Route::resource('dokter0214', DokterController::class);
+Route::resource('kamar0214', KamarController::class);
+Route::resource('user0214', UserController::class);

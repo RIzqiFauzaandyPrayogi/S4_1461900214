@@ -13,5 +13,5 @@ class User extends Model
 
     public $timestamps = false;
 
-    protected $guarded = ['nama', 'username', 'password'];
+    protected $fillabel = ['nama', 'username', 'password'];
 }

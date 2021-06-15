@@ -18,12 +18,12 @@ class KamarController extends Controller
     {
         $kamar = Kamar::when($request->cari, function ($query) use ($request) {
             $query
-            ->where('nama', 'like', "%{$request->cari}%");
+            ->where('id_pasien', 'like', "%{$request->cari}%");
         })->paginate(5);
 
         $kamar->appends($request->only('cari'));
 
-        return view('kamar.index0214', [
+        return view('kamar0214.index', [
             'kamar' => $kamar,
         ])
         ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -37,21 +37,32 @@ class KamarController extends Controller
      */
     public function destroy(Kamar $kamar)
     {
-        Excel::import(new KamarImport, request()->file('file_excel'));
         $kamar->delete();
 
-        return redirect()->route('kamar.index0214')
+        return redirect()->route('kamar0214.index')
                 ->with('success','Kamar berhasil dihapus');
+    }
+
+    /**
+    * Import file excel to database
+    */
+    public function create()
+    {
+        return view('kamar0214.create');
     }
 
     /**
      * Import file excel to database
      */
-    public function import()
+    public function store(Request $request)
     {
-        Excel::import(new KamarImport, request()->file('file_excel'));
+        $request->validate([
+            'file_excel' => 'required',
+        ]);
+
+        Excel::import(new KamarImport, $request->file('file_excel'));
 
         return redirect()->route('kamar.index0214')
-                ->with('success','Berhasil mengimport ke Kamar');
+        ->with('success','Berhasil mengimport ke Kamar');
     }
 }

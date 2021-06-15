@@ -23,7 +23,7 @@ class UserController extends Controller
 
         $user->appends($request->only('cari'));
 
-        return view('user.index0214', [
+        return view('User0214.index', [
             'user' => $user,
         ])
         ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -37,21 +37,32 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        Excel::import(new UserImport, request()->file('file_excel'));
         $user->delete();
 
-        return redirect()->route('user.index0214')
+        return redirect()->route('User0214.index')
                 ->with('success','User berhasil dihapus');
+    }
+
+    /**
+    * Import file excel to database
+    */
+    public function create()
+    {
+        return view('User0214.create');
     }
 
     /**
      * Import file excel to database
      */
-    public function import()
+    public function store(Request $request)
     {
-        Excel::import(new UserImport, request()->file('file_excel'));
+        $request->validate([
+            'file_excel' => 'required',
+        ]);
+
+        Excel::import(new UserImport, $request->file('file_excel'));
 
         return redirect()->route('user.index0214')
-                ->with('success','Berhasil mengimport ke User');
+        ->with('success','Berhasil mengimport ke User');
     }
 }

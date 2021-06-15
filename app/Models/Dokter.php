@@ -13,5 +13,5 @@ class Dokter extends Model
 
     public $timestamps = false;
 
-    protected $guarded = ['nama', 'jabatan'];
+    protected $fillabel = ['nama', 'jabatan'];
 }

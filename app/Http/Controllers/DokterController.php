@@ -23,7 +23,7 @@ class DokterController extends Controller
 
         $dokter->appends($request->only('cari'));
 
-        return view('dokter.index0214', [
+        return view('dokter0214.index', [
             'dokter' => $dokter,
         ])
         ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -37,21 +37,32 @@ class DokterController extends Controller
      */
     public function destroy(Dokter $dokter)
     {
-        Excel::import(new DokterImport, request()->file('file_excel'));
         $dokter->delete();
 
-        return redirect()->route('dokter.index0214')
+        return redirect()->route('dokter0214.index')
                 ->with('success','Dokter berhasil dihapus');
+    }
+
+    /**
+    * Import file excel to database
+    */
+    public function create()
+    {
+        return view('dokter0214.create');
     }
 
     /**
      * Import file excel to database
      */
-    public function import()
+    public function store(Request $request)
     {
-        Excel::import(new DokterImport, request()->file('file_excel'));
+        $request->validate([
+            'file_excel' => 'required',
+        ]);
+
+        Excel::import(new DokterImport, $request->file('file_excel'));
 
         return redirect()->route('dokter.index0214')
-                ->with('success','Berhasil mengimport ke Dokter');
+        ->with('success','Berhasil mengimport ke Dokter');
     }
 }

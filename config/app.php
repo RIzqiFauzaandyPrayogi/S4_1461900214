@@ -135,7 +135,7 @@ return [
     */
 
     'providers' => [
-        Barryvdh\DomPDF\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...
@@ -190,7 +190,7 @@ return [
     */
 
     'aliases' => [
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,

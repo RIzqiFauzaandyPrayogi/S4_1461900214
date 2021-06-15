@@ -13,5 +13,5 @@ class Pasien extends Model
 
     public $timestamps = false;
 
-    protected $guarded = ['nama', 'pasien'];
+    protected $fillabel = ['nama', 'pasien'];
 }
