@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UsersImport;
+use App\Imports\DokterImport;
 use App\Models\Dokter;
 
 class DokterController extends Controller
@@ -37,7 +37,7 @@ class DokterController extends Controller
      */
     public function destroy(Dokter $dokter)
     {
-        Excel::import(new UsersImport, request()->file('file_excel'));
+        Excel::import(new DokterImport, request()->file('file_excel'));
         $dokter->delete();
 
         return redirect()->route('dokter.index0214')
@@ -49,7 +49,7 @@ class DokterController extends Controller
      */
     public function import()
     {
-        Excel::import(new UsersImport, request()->file('file_excel'));
+        Excel::import(new DokterImport, request()->file('file_excel'));
 
         return redirect()->route('dokter.index0214')
                 ->with('success','Berhasil mengimport ke Dokter');

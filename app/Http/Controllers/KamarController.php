@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UsersImport;
+use App\Imports\KamarImport;
 use App\Models\Kamar;
 
 class KamarController extends Controller
@@ -23,7 +23,7 @@ class KamarController extends Controller
 
         $kamar->appends($request->only('cari'));
 
-        return view('kamar.index', [
+        return view('kamar.index0214', [
             'kamar' => $kamar,
         ])
         ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -37,10 +37,10 @@ class KamarController extends Controller
      */
     public function destroy(Kamar $kamar)
     {
-        Excel::import(new UsersImport, request()->file('file_excel'));
+        Excel::import(new KamarImport, request()->file('file_excel'));
         $kamar->delete();
 
-        return redirect()->route('kamar.index')
+        return redirect()->route('kamar.index0214')
                 ->with('success','Kamar berhasil dihapus');
     }
 
@@ -49,9 +49,9 @@ class KamarController extends Controller
      */
     public function import()
     {
-        Excel::import(new UsersImport, request()->file('file_excel'));
+        Excel::import(new KamarImport, request()->file('file_excel'));
 
-        return redirect()->route('kamar.index')
+        return redirect()->route('kamar.index0214')
                 ->with('success','Berhasil mengimport ke Kamar');
     }
 }

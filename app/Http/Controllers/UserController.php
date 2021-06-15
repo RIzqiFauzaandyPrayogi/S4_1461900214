@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UsersImport;
+use App\Imports\UserImport;
 use App\Models\User;
 
 class UserController extends Controller
@@ -23,7 +23,7 @@ class UserController extends Controller
 
         $user->appends($request->only('cari'));
 
-        return view('user.index', [
+        return view('user.index0214', [
             'user' => $user,
         ])
         ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -37,10 +37,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        Excel::import(new UsersImport, request()->file('file_excel'));
+        Excel::import(new UserImport, request()->file('file_excel'));
         $user->delete();
 
-        return redirect()->route('user.index')
+        return redirect()->route('user.index0214')
                 ->with('success','User berhasil dihapus');
     }
 
@@ -49,9 +49,9 @@ class UserController extends Controller
      */
     public function import()
     {
-        Excel::import(new UsersImport, request()->file('file_excel'));
+        Excel::import(new UserImport, request()->file('file_excel'));
 
-        return redirect()->route('user.index')
+        return redirect()->route('user.index0214')
                 ->with('success','Berhasil mengimport ke User');
     }
 }

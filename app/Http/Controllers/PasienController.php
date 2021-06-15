@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UsersImport;
+use App\Imports\PasienImport;
 use App\Models\Pasien;
 
 class PasienController extends Controller
@@ -23,7 +23,7 @@ class PasienController extends Controller
 
         $pasien->appends($request->only('cari'));
 
-        return view('pasien.index', [
+        return view('pasien.index0214', [
             'pasien' => $pasien,
         ])
         ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -37,10 +37,10 @@ class PasienController extends Controller
      */
     public function destroy(Pasien $pasien)
     {
-        Excel::import(new UsersImport, request()->file('file_excel'));
+        Excel::import(new PasienImport, request()->file('file_excel'));
         $pasien->delete();
 
-        return redirect()->route('pasien.index')
+        return redirect()->route('pasien.index0214')
                 ->with('success','Pasien berhasil dihapus');
     }
 
@@ -49,9 +49,9 @@ class PasienController extends Controller
      */
     public function import()
     {
-        Excel::import(new UsersImport, request()->file('file_excel'));
+        Excel::import(new PasienImport, request()->file('file_excel'));
 
-        return redirect()->route('pasien.index')
+        return redirect()->route('pasien.index0214')
                 ->with('success','Berhasil mengimport ke Pasien');
     }
 }
